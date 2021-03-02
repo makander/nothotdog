@@ -1,8 +1,8 @@
-from .models import Picture
+from .models import Image
 from django import forms
 
 
-class UploadPictureForm(forms.ModelForm):
+class ImageUploadForm(forms.ModelForm):
     class Meta:
-        model = Picture
-        fields = ['description', 'location']
+        model = Image
+        fields = ['description']

@@ -1,0 +1,6 @@
+<p>Details of image</p>
+
+{% for img in image %}
+<img src="{{img.imageLocation}}" />
+<p>{{img.description}}</p>
+{% endfor %}

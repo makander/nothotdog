@@ -1,8 +1,12 @@
 {% extends "base.html" %} 
 {% block content %} 
 {% if user.is_authenticated %}
-<h1>You are logged in to see dem photos.</h1>
-<p>You can upload dem pictures</p>
+
+<h1>You are logged in.</h1>
+
+<p>Upload pictures here: </p> <a href="/image_form">Upload</a>
+<p>View your pictures here: </p> <a href="/images">My pictures</a>
+  <p>You can upload dem pictures</p>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %} 
   {{ form }}
