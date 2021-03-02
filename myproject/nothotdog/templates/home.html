@@ -1,0 +1,15 @@
+{% extends "base.html" %} 
+{% block content %} 
+{% if user.is_authenticated %}
+<h1>You are logged in to see dem photos.</h1>
+<p>You can upload dem pictures</p>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %} 
+  {{ form }}
+  <button type="submit">Upload</button>
+</form>
+
+<a href="/logout">Logout</a>
+{% else %}
+<p>Please login to see this page.</p>
+{% endif %} {% endblock %}

@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'compressor',
     'myproject',
-    'nothotdog.apps.NothotdogConfig'
+    'myproject.nothotdog.apps.NothotdogConfig'
 ]
 
 MIDDLEWARE = [

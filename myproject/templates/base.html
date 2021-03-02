@@ -13,10 +13,9 @@
     </head>
 
     <body class="{% block bodyclass %}{% endblock %}">
-        {% block content %}{% endblock %}
-
-        {% compress js %}
-        <script type="text/javascript" src="{% static 'script/app.js' %}"></script>
-        {% endcompress %}
+        {% block content %}
+        
+        
+        {% endblock %}
     </body>
 </html>
