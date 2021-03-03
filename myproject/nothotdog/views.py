@@ -4,7 +4,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from .models import Image
-from django.views.generic import CreateView, TemplateView, DetailView
+from django.views.generic import CreateView, TemplateView, DetailView, UpdateView
 
 class Index(TemplateView):
     template_name = 'index.html'
@@ -20,13 +20,15 @@ class ImageCreate(CreateView):
         return super(ImageCreate, self).dispatch(*args, **kwargs)
 
     model = Image
-    fields = ['description', 'imageLocation']
+    fields = ['description', 'image_location']
 
     def form_valid(self, form):
         new_image = form.save(commit=False)
         new_image.created_by = self.request.user
         new_image.save()
-        return redirect('image', new_image.pk)
+        print(dir(new_image))
+        print(new_image.id)
+        return redirect('image', pk=new_image.pk, permanent=True)
 
 
 class ImageDetail(DetailView):
@@ -51,3 +53,9 @@ class Login(View):
         if user is not None:
             login(request, user)
             return redirect('home')
+
+
+class ImageUpdate(UpdateView):
+    model = Image
+    fields = ['description']
+    template_name = "image_update_form.html"

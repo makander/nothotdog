@@ -1,6 +1,10 @@
 <p>Details of image</p>
 
 {% for img in image %}
-<img src="{{img.imageLocation}}" />
+<img height="300px" width="400px" src="{{img.image_location.url }}" />
 <p>{{img.description}}</p>
+
+<a href="{% imageupdate %}">Change description</a>
 {% endfor %}
+
+
