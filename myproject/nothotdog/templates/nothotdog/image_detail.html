@@ -1,10 +1,11 @@
 <p>Details of image</p>
 
-{% for img in image %}
-<img height="300px" width="400px" src="{{img.image_location.url }}" />
-<p>{{img.description}}</p>
 
-<a href="{% imageupdate %}">Change description</a>
-{% endfor %}
+<img height="300px" width="400px" src="{{ object.image.url }}" />
+<p>{{object.description}}</p>
+<p>Posted by: {{object.created_by}}</p>
+{% if user.is_authenticated %}
+<a href="{% url 'imageupdate' object.id %}">Change description</a>
+{% endif %}
 
-
+<a href="/home">Back</a>

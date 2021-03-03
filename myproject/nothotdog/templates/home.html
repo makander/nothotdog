@@ -5,14 +5,8 @@
 <h1>You are logged in.</h1>
 
 <p>Upload pictures here: </p> <a href="/image_form">Upload</a>
-<p>View your pictures here: </p> <a href="/images">My pictures</a>
-  <p>You can upload dem pictures</p>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %} 
-  {{ form }}
-  <button type="submit">Upload</button>
-</form>
-
+<p>View your pictures here: </p> <a href="/my_images">My images</a>
+<br />
 <a href="/logout">Logout</a>
 {% else %}
 <p>Please login to see this page.</p>
