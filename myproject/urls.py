@@ -22,7 +22,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('nothotdog.urls'))
+    path('', include('myproject.nothotdog.urls'))
 ]
 
 

@@ -1,0 +1,11 @@
+<p>Details of image</p>
+
+
+<img height="300px" width="400px" src="{{ object.image.url }}" />
+<p>{{object.description}}</p>
+<p>Posted by: {{object.created_by}}</p>
+{% if user.is_authenticated %}
+<a href="{% url 'imageupdate' object.id %}">Change description</a>
+{% endif %}
+
+<a href="/home">Back</a>

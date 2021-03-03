@@ -1,0 +1,16 @@
+<ul> 
+    <!-- Iterate over object_list -->
+    {% for object in object_list %} 
+    <!-- Display Objects -->
+    <li>
+        <img height="200" width="300" src="{{object.image.url}}" />
+        <p>Description: {{ object.description }}</p>
+        <a href="{% url 'image' object.id %}">View details</a>
+    </li> 
+    
+    <hr/> 
+    {% empty %} 
+    <li>There are no images.</li> 
+    {% endfor %} 
+</ul> 
+<a href="/">Back</a>
