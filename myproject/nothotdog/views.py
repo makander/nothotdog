@@ -28,6 +28,7 @@ class ImageCreate(CreateView):
         new_image.save()
         return redirect('image', new_image.pk)
 
+
 class ImageDetail(DetailView):
     model = Image    
 
