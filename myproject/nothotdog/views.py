@@ -5,6 +5,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from .models import Image
 from django.views.generic import CreateView, TemplateView, DetailView, UpdateView, ListView
+from rest_framework import routers, serializers, viewsets
+from .serializers import ImageSerializer
+from rest_framework import generics
 
 
 class Index(TemplateView):
@@ -76,3 +79,8 @@ class Logout(View):
     def get(self, request):
         logout(request)
         return render(request, 'index.html')
+
+
+class ImageListView(viewsets.ModelViewSet):
+        queryset = Image.objects.all()
+        serializer_class = ImageSerializer

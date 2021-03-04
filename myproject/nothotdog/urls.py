@@ -1,6 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from django.contrib.auth.decorators import login_required
+from rest_framework import routers, serializers, viewsets
+
+
+#router = routers.DefaultRouter()
+#router.register(r'image/', views.ImageListView, basename="api"),
 
 
 urlpatterns = [
@@ -12,5 +17,7 @@ urlpatterns = [
     path('image/<uuid:pk>/', views.ImageDetail.as_view(), name="image"),
     path('image/<uuid:pk>/image_update_form/', views.ImageUpdate.as_view(), name="imageupdate"),
     path('images/', views.ImageList.as_view(), name="images"),
-    path('my_images/', views.MyImages.as_view(), name="myimages")
+    path('my_images/', views.MyImages.as_view(), name="myimages"),
+    path('api/images', views.ImageListView.as_view({'get': 'list'}))
 ]
+

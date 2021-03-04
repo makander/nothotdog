@@ -13,9 +13,10 @@
     </head>
 
     <body class="{% block bodyclass %}{% endblock %}">
-        {% block content %}
-        
-        
-        {% endblock %}
+        {% block content %}{% endblock %}
+        <div id="root"></div>
+        {% compress js %}
+        <script type="text/javascript" src="{% static 'script/app.js' %}"></script>
+        {% endcompress %}
     </body>
 </html>

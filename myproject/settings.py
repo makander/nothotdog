@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'compressor',
     'myproject',
-    'myproject.nothotdog.apps.NothotdogConfig'
+    'myproject.nothotdog.apps.NothotdogConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -166,3 +167,11 @@ if not DEBUG:
     ('text/jsx', 'NODE_ENV=production node_modules/.bin/browserify '
                  '-t babelify {infile} -o {outfile}'),
 )
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
