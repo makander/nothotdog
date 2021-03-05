@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.utils.decorators import method_decorator
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
@@ -18,11 +20,7 @@ class Home(TemplateView):
     template_name = 'home.html'
 
 
-class ImageCreate(CreateView):
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(ImageCreate, self).dispatch(*args, **kwargs)
-
+class ImageCreate(LoginRequiredMixin, CreateView):
     model = Image
     fields = ['description', 'image']
 
@@ -55,7 +53,7 @@ class Login(View):
         return redirect('')
 
 
-class ImageUpdate(UpdateView):
+class ImageUpdate(LoginRequiredMixin, UpdateView):
     model = Image
     fields = ['description']
     template_name = "nothotdog/image_update_form.html"
@@ -67,7 +65,7 @@ class ImageList(ListView):
     template_name = "nothotdog/image_list.html"
 
 
-class MyImages(ListView):
+class MyImages(LoginRequiredMixin, ListView):
     paginate_by = 20
     template_name = "nothotdog/my_images.html"
 
