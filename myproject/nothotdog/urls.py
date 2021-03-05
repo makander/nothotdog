@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from rest_framework import routers, serializers, viewsets
 
 
-#router = routers.DefaultRouter()
-#router.register(r'image/', views.ImageListView, basename="api"),
+router = routers.DefaultRouter()
+router.register(r'images', views.ImageListView),
 
 
 urlpatterns = [
@@ -18,6 +18,7 @@ urlpatterns = [
     path('image/<uuid:pk>/image_update_form/', views.ImageUpdate.as_view(), name="imageupdate"),
     path('images/', views.ImageList.as_view(), name="images"),
     path('my_images/', views.MyImages.as_view(), name="myimages"),
-    path('api/images', views.ImageListView.as_view({'get': 'list'}))
+    #path('api/images', views.ImageListView.as_view({'get': 'list'}))
+    path('api/', include(router.urls))
 ]
 
