@@ -15,6 +15,8 @@ from rest_framework import generics
 class Index(TemplateView):
     template_name = 'index.html'
 
+class SPAIndex(TemplateView):
+    template_name = 'nothotdog/spa/index.html'
 
 class Home(TemplateView):
     template_name = 'home.html'

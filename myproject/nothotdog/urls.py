@@ -21,6 +21,8 @@ urlpatterns = [
     path('my_images/', views.MyImages.as_view(), name="myimages"),
     #path('api/images', views.ImageListView.as_view({'get': 'list'}))
     path('api/', include(router.urls)),
-    path('api/auth/', include('dj_rest_auth.urls'))
+    path('api/auth/', include('dj_rest_auth.urls')),
+    path('spa/', views.SPAIndex.as_view(), name="spa_index")
+
 ]
 
