@@ -54,7 +54,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+
 ]
+
+
+ALLOWED_HOSTS = ['*']
+
+CORS_ORIGIN_ALLOW_ALL = True
+
 
 ROOT_URLCONF = 'myproject.urls'
 
@@ -166,10 +174,10 @@ COMPRESS_PRECOMPILERS = (
 if not DEBUG:
     COMPRESS_OFFLINE = True
     COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'node_modules/.bin/node-sass {infile} {outfile}'),
-    ('text/jsx', 'NODE_ENV=production node_modules/.bin/browserify '
-                 '-t babelify {infile} -o {outfile}'),
-)
+        ('text/x-scss', 'node_modules/.bin/node-sass {infile} {outfile}'),
+        ('text/jsx', 'NODE_ENV=production node_modules/.bin/browserify '
+         '-t babelify {infile} -o {outfile}'),
+    )
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -178,8 +186,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        #'rest_framework.authentication.BasicAuthentication',
-        #'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
