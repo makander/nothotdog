@@ -3,8 +3,7 @@ import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/";
-import { takeLatest } from "redux-saga/effects";
-import { fetchData } from "../sagas/index";
+import { getUser } from "../sagas/index";
 
 const Login = ({ loginUser }) => {
   const [state, setState] = useState({ token: "" });
@@ -16,7 +15,8 @@ const Login = ({ loginUser }) => {
     console.log("click");
     const body = { username, password };
     console.log(body);
-    axios({
+    getUser(username, password);
+    /*  axios({
       method: "post",
       url: "http://localhost:8080/api/auth/login/",
       data: {
@@ -30,7 +30,7 @@ const Login = ({ loginUser }) => {
         yield takeLatest("GET_USER", fetchData);
       };
       console.log(userdata);
-    });
+    }); */
   };
   //setState({ ...state, token: res.data.key }));
 
@@ -57,6 +57,7 @@ const Login = ({ loginUser }) => {
 
 const mapDispatchToProps = {
   loginUser,
+  getUser,
 };
 
 export default connect(null, mapDispatchToProps)(Login);
