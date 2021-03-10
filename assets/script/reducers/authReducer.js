@@ -7,9 +7,10 @@ const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGGED_IN: {
       console.log("in the reducer");
+      console.log(action);
       return {
         ...state,
-        user,
+        token: action.payload,
       };
     }
     case LOGGED_OUT: {

@@ -3,8 +3,10 @@ import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/";
+import { takeLatest } from "redux-saga/effects";
+import { fetchData } from "../sagas/index";
 
-const Login = () => {
+const Login = ({ loginUser }) => {
   const [state, setState] = useState({ token: "" });
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +26,10 @@ const Login = () => {
     }).then((res) => {
       loginUser(res.data.key);
       //payload: res.data.key,
+      const userdata = function* () {
+        yield takeLatest("GET_USER", fetchData);
+      };
+      console.log(userdata);
     });
   };
   //setState({ ...state, token: res.data.key }));
