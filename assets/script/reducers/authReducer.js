@@ -1,19 +1,30 @@
-import { LOGGED_IN, LOGGED_OUT } from "../actionTypes";
+import {
+  LOGIN_REQUEST,
+  LOGIN_FAILED,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+} from "../actionTypes";
 
 const INITIAL_STATE = [{ token: "" }];
 
 const authReducer = (state = INITIAL_STATE, action) => {
   console.log("before switch");
   switch (action.type) {
-    case LOGGED_IN: {
-      console.log("in the reducer");
+    case LOGIN_SUCCESS: {
       console.log(action);
       return {
         ...state,
         token: action.payload,
       };
     }
-    case LOGGED_OUT: {
+    case LOGIN_FAILED: {
+      console.log(action);
+      return {
+        ...state,
+        token: action.payload,
+      };
+    }
+    case LOGOUT_SUCCESS: {
       return {
         ...state,
         INITIAL_STATE,

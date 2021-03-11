@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { loginUser } from "../actions/";
 import { getUser } from "../sagas/index";
 
-const Login = ({ loginUser }) => {
+const Login = ({ loginUser, getUser }) => {
   const [state, setState] = useState({ token: "" });
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +15,7 @@ const Login = ({ loginUser }) => {
     console.log("click");
     const body = { username, password };
     console.log(body);
-    getUser(username, password);
+    loginUser(body);
     /*  axios({
       method: "post",
       url: "http://localhost:8080/api/auth/login/",

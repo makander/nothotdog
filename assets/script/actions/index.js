@@ -1,14 +1,13 @@
-import { LOGGED_IN, LOGGED_OUT } from "../actionTypes";
+import { LOGGED_IN, LOGGED_OUT, LOGIN_REQUEST } from "./actionTypes";
 
 export const loginUser = (user) => {
-  console.log("we are runnnig");
-  console.log(user);
+  console.log("USER IN LOGIN REQUEST", user);
   return {
-    type: LOGGED_IN,
-    payload: user,
+    type: LOGIN_REQUEST,
+    user,
   };
 };
-const logout = () => {
+const logoutUser = () => {
   return {
     type: LOGGED_OUT,
   };
