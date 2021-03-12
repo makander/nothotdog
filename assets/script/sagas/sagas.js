@@ -15,6 +15,7 @@ export function* fetchUser(payload) {
 
 export function* fetchImages() {
   try {
+    console.log("RUNNING FETCH IMAGES");
     const images = yield call(fetchImageData);
     console.log(images);
   } catch (error) {}

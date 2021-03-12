@@ -15,7 +15,7 @@ const imageReducer = (state = INITIAL_STATE, action) => {
     case IMAGES_RECEIVED: {
       console.log(action);
       return {
-        ...state,
+        ...state.images,
         images: action.payload,
       };
     }

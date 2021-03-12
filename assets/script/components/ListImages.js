@@ -1,12 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { requestImages } from "../actions/imageActions";
 
 const ListImages = () => {
   useEffect;
-  useDispatch;
+  const dispatch = useDispatch();
   useSelector;
 
-  use;
+  useEffect(() => {
+    dispatch(requestImages());
+    console.log("hi");
+  }, []);
+
   return (
     <div className="list-image-container">
       <p>List images</p>

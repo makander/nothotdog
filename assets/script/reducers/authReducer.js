@@ -11,8 +11,9 @@ const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS: {
       console.log(action);
+      console.log(state);
       return {
-        ...state,
+        ...state.authenticated,
         authenticated: true,
       };
     }

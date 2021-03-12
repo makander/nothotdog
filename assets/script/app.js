@@ -14,12 +14,12 @@ function App() {
     <>
       <Navbar />
       <ListImages />
+      <Login />
     </>
     /*   <Switch>
       <Navbar />
       <Route path={"/"} exact component={ListImages} />
       <Route path={"/login"}>
-        <Login />
       </Route>
       <Route path={"/images/:id"}>
         <ImageDetail />

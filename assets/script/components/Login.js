@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authActions";
-import { getUser } from "../sagas/sagas";
 
-const Login = ({ loginUser, getUser }) => {
+const Login = ({ loginUser }) => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -38,7 +37,6 @@ const Login = ({ loginUser, getUser }) => {
 
 const mapDispatchToProps = {
   loginUser,
-  getUser,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

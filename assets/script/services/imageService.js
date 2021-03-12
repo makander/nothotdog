@@ -2,13 +2,13 @@ import { API_URL } from "./apiConfig";
 
 export const fetchImageData = async () => {
   const userToken = localStorage.getItem("userToken");
-
+  console.log("INSIDE FETCHIMAGEDATA");
   try {
-    return await axios({
+    const response = await axios({
       method: "get",
       url: `${API_URL}images/`,
     });
-    return response;
+    console.log("these are images", response);
   } catch (error) {}
 };
 
