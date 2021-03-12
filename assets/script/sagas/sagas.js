@@ -1,6 +1,5 @@
 import { call, put, takeLatest, all, take } from "redux-saga/effects";
-import { fetchUserData } from "../services/authService";
-import { fetchImageData } from "../services/imageService";
+import { fetchUserData, fetchImageData } from "../api";
 
 export function* fetchUser(payload) {
   try {
@@ -18,6 +17,7 @@ export function* fetchImages() {
     console.log("RUNNING FETCH IMAGES");
     const images = yield call(fetchImageData);
     console.log(images);
+    yield put({ type: "IMAGES_RECEIVED", images });
   } catch (error) {}
 }
 

@@ -15,8 +15,10 @@ from rest_framework import generics
 class Index(TemplateView):
     template_name = 'index.html'
 
+
 class SPAIndex(TemplateView):
     template_name = 'nothotdog/spa/index.html'
+
 
 class Home(TemplateView):
     template_name = 'home.html'
@@ -82,5 +84,5 @@ class Logout(View):
 
 
 class ImageListView(viewsets.ModelViewSet):
-        queryset = Image.objects.all()
-        serializer_class = ImageSerializer
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer

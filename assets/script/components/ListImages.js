@@ -1,20 +1,35 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { requestImages } from "../actions/imageActions";
-
+import { Link } from "react-router-dom";
 const ListImages = () => {
-  useEffect;
   const dispatch = useDispatch();
-  useSelector;
-
+  const images = useSelector((state) => state.images);
   useEffect(() => {
     dispatch(requestImages());
-    console.log("hi");
   }, []);
+
+  const Images = () => {
+    return images.images ? (
+      <ul>
+        {images.images.map((item) => (
+          <li key={item.id}>
+            <p>{item.name}</p>
+            <img height={200} width={300} src={item.image} />
+            <p>{item.description}</p>
+            <Link to={`/images/${item.id}`}>Detail</Link>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      ""
+    );
+  };
 
   return (
     <div className="list-image-container">
       <p>List images</p>
+      <Images />
     </div>
   );
 };

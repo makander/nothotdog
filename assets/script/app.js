@@ -13,24 +13,24 @@ function App() {
   return (
     <>
       <Navbar />
-      <ListImages />
-      <Login />
+      <Switch>
+        <Route path={"/"} exact component={ListImages} />
+        <Route exact path={"/login/"}>
+          <Login />
+        </Route>
+        <Route path={"/images/:id"}>
+          <ImageDetail />
+        </Route>
+      </Switch>
     </>
-    /*   <Switch>
-      <Navbar />
-      <Route path={"/"} exact component={ListImages} />
-      <Route path={"/login"}>
-      </Route>
-      <Route path={"/images/:id"}>
-        <ImageDetail />
-      </Route>
-    </Switch> */
   );
 }
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter basename="/spa">
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );
