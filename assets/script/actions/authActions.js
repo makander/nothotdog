@@ -1,4 +1,4 @@
-import { LOGGED_IN, LOGGED_OUT, LOGIN_REQUEST } from "./actionTypes";
+import { LOGGED_OUT, LOGIN_REQUEST } from "./actionTypes";
 
 export const loginUser = (user) => {
   console.log("USER IN LOGIN REQUEST", user);

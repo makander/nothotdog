@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import React from "react";
-import axios from "axios";
 import { connect } from "react-redux";
-import { loginUser } from "../actions/";
-import { getUser } from "../sagas/index";
+import { loginUser } from "../actions/authActions";
+import { getUser } from "../sagas/sagas";
 
 const Login = ({ loginUser, getUser }) => {
-  const [state, setState] = useState({ token: "" });
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,25 +12,8 @@ const Login = ({ loginUser, getUser }) => {
     e.preventDefault();
     console.log("click");
     const body = { username, password };
-    console.log(body);
     loginUser(body);
-    /*  axios({
-      method: "post",
-      url: "http://localhost:8080/api/auth/login/",
-      data: {
-        username,
-        password,
-      },
-    }).then((res) => {
-      loginUser(res.data.key);
-      //payload: res.data.key,
-      const userdata = function* () {
-        yield takeLatest("GET_USER", fetchData);
-      };
-      console.log(userdata);
-    }); */
   };
-  //setState({ ...state, token: res.data.key }));
 
   return (
     <>

@@ -1,5 +1,21 @@
 import axios from "axios";
+import { API_URL } from "./apiConfig";
 
-const getUser = async (data) => {
-  axios.post(`http://localhost:8080/api/auth/login/`, data);
+export const fetchUserData = async (payload) => {
+  const username = payload.user.username;
+  const password = payload.user.password;
+
+  try {
+    const response = await axios({
+      method: "post",
+      url: `${API_URL}login/`,
+      data: {
+        username,
+        password,
+      },
+    });
+    return response.data.key;
+  } catch (e) {
+    console.log("FETCH DATA ERROR: ", e);
+  }
 };

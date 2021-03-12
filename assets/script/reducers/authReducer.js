@@ -1,11 +1,10 @@
 import {
-  LOGIN_REQUEST,
   LOGIN_FAILED,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
-} from "../actionTypes";
+} from "../actions/actionTypes";
 
-const INITIAL_STATE = [{ token: "" }];
+const INITIAL_STATE = [{ authenticated: false }];
 
 const authReducer = (state = INITIAL_STATE, action) => {
   console.log("before switch");
@@ -14,7 +13,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       console.log(action);
       return {
         ...state,
-        token: action.payload,
+        authenticated: true,
       };
     }
     case LOGIN_FAILED: {

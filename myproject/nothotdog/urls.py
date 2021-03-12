@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path, include, re_path
 from . import views
 from django.contrib.auth.decorators import login_required
 from rest_framework import routers, serializers, viewsets
@@ -16,13 +16,12 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name="logout.html"), name="logout"),
     path('image_form/', views.ImageCreate.as_view()),
     path('image/<uuid:pk>/', views.ImageDetail.as_view(), name="image"),
-    path('image/<uuid:pk>/image_update_form/', views.ImageUpdate.as_view(), name="imageupdate"),
+    path('image/<uuid:pk>/image_update_form/',
+         views.ImageUpdate.as_view(), name="imageupdate"),
     path('images/', views.ImageList.as_view(), name="images"),
     path('my_images/', views.MyImages.as_view(), name="myimages"),
-    #path('api/images', views.ImageListView.as_view({'get': 'list'}))
+    # path('api/images', views.ImageListView.as_view({'get': 'list'}))
     path('api/', include(router.urls)),
     path('api/auth/', include('dj_rest_auth.urls')),
-    path('spa/', views.SPAIndex.as_view(), name="spa_index")
-
+    path('spa/', views.SPAIndex.as_view(), name="spa_index"),
 ]
-
