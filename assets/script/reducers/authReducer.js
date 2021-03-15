@@ -4,7 +4,7 @@ import {
   LOGOUT_SUCCESS,
 } from "../actions/actionTypes";
 
-const INITIAL_STATE = { authenticated: null };
+const INITIAL_STATE = { authenticated: false };
 
 const authReducer = (state = INITIAL_STATE, action) => {
   console.log("before switch");

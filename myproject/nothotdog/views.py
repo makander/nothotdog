@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
+from rest_framework import parsers
+from rest_framework import response
+from rest_framework import status
+from rest_framework import viewsets
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from .models import Image
 from django.views.generic import CreateView, TemplateView, DetailView, UpdateView, ListView
-from rest_framework import routers, serializers, viewsets
-from .serializers import ImageSerializer
-from rest_framework import generics
+from .serializers import ImageSerializer, UserSerializer, ImageDataSerializer
+from rest_framework.decorators import action
 
 
 class Index(TemplateView):
@@ -86,3 +87,29 @@ class Logout(View):
 class ImageListView(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
+
+    @action(detail=True, methods=['post'],
+            serializer_class=ImageDataSerializer,
+            parser_classes=[parsers.MultiPartParser],)
+    def pic(self, request, pk):
+        obj = self.get_object()
+        serializer = self.serializer_class(obj, data=request.data,
+                                           partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data)
+        return response.Response(serializer.errors,
+                                 status.HTTP_400_BAD_REQUEST)
+
+
+class UserImageListView(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class MyImagesListView(viewsets.ModelViewSet):
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer
+
+    def get_queryset(self):
+        return Image.objects.filter(created_by=self.request.user)

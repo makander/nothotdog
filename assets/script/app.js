@@ -6,8 +6,20 @@ import Navbar from "./components/Navbar";
 import ListImages from "./components/ListImages";
 import Login from "./components/Login";
 import ImageDetail from "./components/ImageDetail";
+import Upload from "./components/Upload";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import EditImage from "./components/EditImage";
+import axios from "axios";
+axios.interceptors.request.use((request) => {
+  console.log("Starting Request", JSON.stringify(request, null, 2));
+  return request;
+});
+
+/* axios.interceptors.response.use((response) => {
+  console.log("Response:", JSON.stringify(response, null, 2));
+  return response;
+}); */
 
 function App() {
   return (
@@ -18,8 +30,18 @@ function App() {
         <Route exact path={"/login/"}>
           <Login />
         </Route>
-        <Route path={"/images/:id"}>
-          <ImageDetail />
+        <Route path={"/images/:id"} exact component={ImageDetail}>
+          <ImageDetail></ImageDetail>
+        </Route>
+        <Route>
+          <Upload path={"upload"}></Upload>
+        </Route>
+        <Route>
+          <EditImage
+            path={"/images/edit/:id"}
+            exact
+            component={EditImage}
+          ></EditImage>
         </Route>
       </Switch>
     </>
