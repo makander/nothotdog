@@ -7,7 +7,6 @@ const EditImage = () => {
   const imageId = useLocation();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +29,6 @@ const EditImage = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <input onChange={(e) => setImage(e.target.value)} type="file"></input>
         <button type="submit">Save</button>
       </form>
     </>

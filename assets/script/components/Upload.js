@@ -1,27 +1,26 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { createImageRequest } from "../actions/imageActions";
 
 const Upload = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const imageData = {
       name,
       description,
       image,
     };
 
-    const data = {
-      headers: {
-        "content-type": "multipart/form-data",
-        Authorization: "Token 459805df3300483f6be75c9de615c32e8b53f4b0",
-      },
-    };
-
-    axios.post("http://localhost:8080/api/images/", imageData, data);
+    dispatch(createImageRequest(imageData));
+    // axios.post("http://localhost:8080/api/images/", formData, data);
   };
   return (
     <>
@@ -41,9 +40,8 @@ const Upload = () => {
           onChange={(e) => setName(e.target.value)}
         />
         <input
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
           type="file"
+          onChange={(e) => setImage(e.target.files[0])}
         ></input>
 
         <button type="submit">Save</button>

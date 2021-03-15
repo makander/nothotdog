@@ -13,8 +13,6 @@ const imageReducer = (state = INITIAL_STATE, action) => {
   console.log("IMAGE REDUCER RUNNING");
   switch (action.type) {
     case IMAGES_RECEIVED: {
-      console.log(action);
-      console.log(state);
       return { ...state, images: action.images };
     }
     case IMAGES_RECIVED_FAILURE: {
@@ -25,6 +23,8 @@ const imageReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case CREATE_IMAGE_SUCCESS: {
+      console.log(action);
+      console.log(state);
       return {
         ...state,
         INITIAL_STATE,

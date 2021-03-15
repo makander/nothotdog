@@ -10,7 +10,7 @@ from django.views import View
 from .models import Image
 from django.views.generic import CreateView, TemplateView, DetailView, UpdateView, ListView
 from .serializers import ImageSerializer, UserSerializer, ImageDataSerializer
-from rest_framework import decorators
+from rest_framework.decorators import action
 
 
 class Index(TemplateView):
@@ -85,24 +85,27 @@ class Logout(View):
 
 
 class ImageListView(viewsets.ModelViewSet):
-    queryset = Image.objects.all()
     serializer_class = ImageSerializer
+    queryset = Image.objects.all()
 
-    @decorators.action(
-        detail=True,
-        methods=['POST'],
-        serializer_class=ImageDataSerializer,
-        parser_classes=[parsers.MultiPartParser],
-    )
+    @action(detail=True, methods=['POST'], serializer_class=ImageDataSerializer,
+            parser_classes=[parsers.MultiPartParser],)
     def image(self, request, pk):
         obj = self.get_object()
+
         serializer = self.serializer_class(obj, data=request.data,
                                            partial=True)
+
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(self.request.data.get('image'))
             return response.Response(serializer.data)
         return response.Response(serializer.errors,
                                  status.HTTP_400_BAD_REQUEST)
+
+    def perform_create(self, serializer):
+        # Include the owner attribute directly, rather than from request data.
+        serializer.save(created_by=self.request.user,)
+        # Perform a custom post-save action.
 
 
 class UserImageListView(viewsets.ModelViewSet):
