@@ -10,7 +10,7 @@ from django.views import View
 from .models import Image
 from django.views.generic import CreateView, TemplateView, DetailView, UpdateView, ListView
 from .serializers import ImageSerializer, UserSerializer, ImageDataSerializer
-from rest_framework.decorators import action
+from rest_framework import decorators
 
 
 class Index(TemplateView):
@@ -88,10 +88,13 @@ class ImageListView(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
-    @action(detail=True, methods=['post'],
-            serializer_class=ImageDataSerializer,
-            parser_classes=[parsers.MultiPartParser],)
-    def pic(self, request, pk):
+    @decorators.action(
+        detail=True,
+        methods=['POST'],
+        serializer_class=ImageDataSerializer,
+        parser_classes=[parsers.MultiPartParser],
+    )
+    def image(self, request, pk):
         obj = self.get_object()
         serializer = self.serializer_class(obj, data=request.data,
                                            partial=True)

@@ -14,12 +14,14 @@ const Upload = () => {
       image,
     };
 
-    const headers = {
-      //"Content-Type": "multipart/form-data",
-      Authorization: "Token 459805df3300483f6be75c9de615c32e8b53f4b0",
+    const data = {
+      headers: {
+        "content-type": "multipart/form-data",
+        Authorization: "Token 459805df3300483f6be75c9de615c32e8b53f4b0",
+      },
     };
 
-    axios.post("http://localhost:8080/api/images/", imageData, headers);
+    axios.post("http://localhost:8080/api/images/", imageData, data);
   };
   return (
     <>
