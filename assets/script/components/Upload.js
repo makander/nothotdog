@@ -20,7 +20,10 @@ const Upload = () => {
     };
 
     dispatch(createImageRequest(imageData));
-    // axios.post("http://localhost:8080/api/images/", formData, data);
+
+    setName("");
+    setDescription("");
+    setImage();
   };
   return (
     <>

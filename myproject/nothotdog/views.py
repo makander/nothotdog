@@ -85,10 +85,10 @@ class Logout(View):
 
 
 class ImageListView(viewsets.ModelViewSet):
-    serializer_class = ImageSerializer
     queryset = Image.objects.all()
+    serializer_class = ImageSerializer
 
-    @action(detail=True, methods=['POST'], serializer_class=ImageDataSerializer,
+    @action(detail=True, methods=['PUT'], serializer_class=ImageDataSerializer,
             parser_classes=[parsers.MultiPartParser],)
     def image(self, request, pk):
         obj = self.get_object()

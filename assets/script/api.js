@@ -39,25 +39,34 @@ export const postImageData = async ({ form: { image, description, name } }) => {
   if (userToken) {
     axios.defaults.headers.common["Authorization"] = `Token ${userToken}`;
   }
-
   console.log(image);
-
-  const body = {
+  let data = {
     name,
     description,
-  };
-
-  const imgData = {
-    image,
   };
 
   try {
     const createImageObject = await axios.post(
       "http://localhost:8080/api/images/",
+      data
+    );
+
+    const newObjectId = createImageObject.data.id;
+
+    console.log(createImageObject);
+
+    let body = {
+      image,
+      id: newObjectId,
+      name,
+    };
+
+    const addImageToObject = await axios.put(
+      `http://localhost:8080/api/images/${newObjectId}/`,
       body
     );
 
-    createImageObject.console.log(createImageObject);
+    console.log(addImageToObject);
     //return response.data;
   } catch (error) {
     console.log(error);

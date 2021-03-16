@@ -6,6 +6,7 @@ export function* fetchUser(payload) {
     const token = yield call(fetchUserData, payload);
     localStorage.setItem("userToken", token);
     yield put({ type: "LOGIN_SUCCESS" });
+    history.p;
   } catch (error) {
     yield put({ type: "LOGIN_FAILED", error });
   }
@@ -13,7 +14,6 @@ export function* fetchUser(payload) {
 
 export function* fetchImages() {
   try {
-    console.log("RUNNING FETCH IMAGES");
     const images = yield call(fetchImageData);
     console.log(images);
     yield put({ type: "IMAGES_RECEIVED", images });
@@ -25,9 +25,8 @@ export function* fetchImages() {
 export function* createImage(form) {
   console.log("creating images");
   try {
-    console.log(form);
-    const newImg = yield call(postImageData, form);
-    console.log(newImg);
+    yield call(postImageData, form);
+
     yield put({ type: "CREATE_IMAGE_SUCCESS" });
   } catch (error) {
     //yield put({ type: "CREATE_IMAGE_FAILED", error });

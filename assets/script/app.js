@@ -11,6 +11,8 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import EditImage from "./components/EditImage";
 import axios from "axios";
+import PrivateRoute from "../script/protectedRouter";
+import Profile from "./components/Profile";
 axios.interceptors.request.use((request) => {
   console.log("Starting Request", JSON.stringify(request, null, 2));
   return request;
@@ -27,22 +29,11 @@ function App() {
       <Navbar />
       <Switch>
         <Route path={"/"} exact component={ListImages} />
-        <Route exact path={"/login/"}>
-          <Login />
-        </Route>
-        <Route path={"/images/:id"} exact component={ImageDetail}>
-          <ImageDetail></ImageDetail>
-        </Route>
-        <Route>
-          <Upload path={"upload"}></Upload>
-        </Route>
-        <Route>
-          <EditImage
-            path={"/images/edit/:id"}
-            exact
-            component={EditImage}
-          ></EditImage>
-        </Route>
+        <Route exact path={"/login/"} exact component={Login} />
+        <Route path={"/images/:id"} exact component={ImageDetail} />
+        <Route path={"/upload"} exact component={Upload} />
+        <Route path={"/images/edit/:id"} exact component={EditImage} />
+        <PrivateRoute path="/profile" exact component={Profile} />
       </Switch>
     </>
   );

@@ -5,9 +5,11 @@ from django.contrib.auth.models import User
 
 
 class ImageSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
+
     class Meta:
         model = Image
-        fields = ['name', 'description', 'image']
+        fields = ['name', 'description', 'id']
 
         def update(self, instance, validated_data):
             instance.name = validated_data.pop('name')

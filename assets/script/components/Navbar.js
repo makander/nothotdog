@@ -25,12 +25,12 @@ const Navbar = () => {
       </div>
 
       <div className="container">
-        <Link to="/login">Photos</Link>
+        <Link to="/">Photos</Link>
         {authed ? (
           <>
-            <Link to="/login">Profile</Link>
+            <Link to="/profile">Profile</Link>
             <Link to="/upload">Upload</Link>
-            <a>Logout</a>
+            <Link to="/">logout</Link>
           </>
         ) : (
           <Link to="/login">Login</Link>
