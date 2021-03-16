@@ -8,9 +8,11 @@ from rest_framework import viewsets
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from .models import Image
-from django.views.generic import CreateView, TemplateView, DetailView, UpdateView, ListView
+from django.views.generic import CreateView, TemplateView, DetailView, ListView, UpdateView
 from .serializers import ImageSerializer, UserSerializer, ImageDataSerializer
 from rest_framework.decorators import action
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
 
 
 class Index(TemplateView):
@@ -87,6 +89,14 @@ class Logout(View):
 class ImageListView(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
+
+    @receiver(post_save, sender=Image)
+    def nothotdog(sender, instance, **kwargs):
+        substr = "hotdog"
+        if substr in instance.name:
+            print('valid')
+        else:
+            print('invalid hotdog')
 
     @action(detail=True, methods=['PUT'], serializer_class=ImageDataSerializer,
             parser_classes=[parsers.MultiPartParser],)

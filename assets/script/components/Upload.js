@@ -20,7 +20,6 @@ const Upload = () => {
     };
 
     dispatch(createImageRequest(imageData));
-
     setName("");
     setDescription("");
     setImage();

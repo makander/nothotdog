@@ -10,7 +10,6 @@ import {
 const INITIAL_STATE = {};
 
 const imageReducer = (state = INITIAL_STATE, action) => {
-  console.log("IMAGE REDUCER RUNNING");
   switch (action.type) {
     case IMAGES_RECEIVED: {
       return { ...state, images: action.images };

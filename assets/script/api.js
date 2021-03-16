@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const AUTH_URL = "http://localhost:8080/api/auth/";
-const IMAGE_API = "http://localhost:8080/api/images/";
+const AUTH_URL = "http://localhost:8000/api/auth/";
+const IMAGE_API = "http://localhost:8000/api/images/";
 
 export const fetchUserData = async (payload) => {
   const username = payload.user.username;
@@ -40,30 +40,25 @@ export const postImageData = async ({ form: { image, description, name } }) => {
     axios.defaults.headers.common["Authorization"] = `Token ${userToken}`;
   }
   console.log(image);
-  let data = {
-    name,
-    description,
-  };
 
   try {
-    const createImageObject = await axios.post(
-      "http://localhost:8080/api/images/",
-      data
-    );
+    const body = {
+      name,
+      description,
+    };
+    const createImageObject = await axios.post(`${IMAGE_API}`, body);
 
     const newObjectId = createImageObject.data.id;
 
     console.log(createImageObject);
+    const formData = new FormData();
 
-    let body = {
-      image,
-      id: newObjectId,
-      name,
-    };
+    formData.append("image", image);
+    formData.append("name", name);
 
     const addImageToObject = await axios.put(
-      `http://localhost:8080/api/images/${newObjectId}/`,
-      body
+      `${IMAGE_API}${newObjectId}/`,
+      formData
     );
 
     console.log(addImageToObject);

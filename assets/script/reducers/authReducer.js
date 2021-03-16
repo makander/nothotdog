@@ -7,11 +7,8 @@ import {
 const INITIAL_STATE = { authenticated: false };
 
 const authReducer = (state = INITIAL_STATE, action) => {
-  console.log("before switch");
   switch (action.type) {
     case LOGIN_SUCCESS: {
-      console.log(action);
-      console.log(state);
       return {
         ...state.authenticated,
         authenticated: true,
