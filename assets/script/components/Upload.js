@@ -56,7 +56,7 @@ const Upload = () => {
           />
         </div>
 
-        <button type="submit">Save</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );

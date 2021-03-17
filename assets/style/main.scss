@@ -77,6 +77,7 @@ body {
   &.upload {
     background-color: white;
     margin: 4rem 10rem;
+    box-shadow: 1px 1px 1rem lightgrey;
     h2 {
       padding: 2rem 1rem 1rem 1rem;
     }
@@ -90,6 +91,29 @@ body {
       input,
       textarea {
         width: 100%;
+        border: 1px solid darkgray;
+        border-radius: 4px;
+      }
+
+      input[type="text" i] {
+        padding: 1px 2px;
+        height: 2rem;
+      }
+
+      input[type="file"] {
+        border: none;
+      }
+
+      button {
+        width: 5rem;
+        height: 2rem;
+        border: none;
+        background: #0ccfff;
+        color: white;
+        border-radius: 3px;
+        font-size: 1rem;
+        align-self: flex-end;
+        margin-top: 2rem;
       }
     }
   }
