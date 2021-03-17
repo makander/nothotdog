@@ -25,30 +25,40 @@ const Upload = () => {
     setImage();
   };
   return (
-    <>
+    <div className="form-container upload">
+      <h2>Upload</h2>
+      <hr />
       <form onSubmit={handleSubmit}>
-        <label>Change description</label>
-        <textarea
-          type="text"
-          value={description}
-          placeholder="Description"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <label>Change name</label>
-        <input
-          type="text"
-          placeholder="Change name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="file"
-          onChange={(e) => setImage(e.target.files[0])}
-        ></input>
+        <div className="input-container">
+          <label>Title</label>
+
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+
+        <div className="input-container">
+          <label>File</label>
+          <input
+            type="file"
+            onChange={(e) => setImage(e.target.files[0])}
+          ></input>
+        </div>
+
+        <div className="input-container">
+          <label>Description</label>
+          <textarea
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
 
         <button type="submit">Save</button>
       </form>
-    </>
+    </div>
   );
 };
 

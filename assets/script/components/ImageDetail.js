@@ -9,7 +9,7 @@ const ImageDetail = () => {
 
   const Detail = () => {
     return imageDetail.map((item) => (
-      <>
+      <div className="image-detail-container">
         <div className={"header image-detail"}>
           <h1 className={"header image-detail highlight"}>{item.name}</h1>
           <h1 className={"header image-detail"}>{item.description}</h1>
@@ -26,7 +26,7 @@ const ImageDetail = () => {
             <img src={item.image} />
           </div>
         </div>
-      </>
+      </div>
     ));
   };
 

@@ -5,11 +5,14 @@ import uuid
 
 
 class Image(models.Model):
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=40)
     description = models.TextField(max_length=160, blank=True)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True),
+    valid = models.BooleanField(null=True)
 
     def __str__(self):
         return self.name

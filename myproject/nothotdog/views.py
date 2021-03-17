@@ -96,19 +96,21 @@ class ImageListView(viewsets.ModelViewSet):
     def nothotdog(sender, instance, **kwargs):
         id = str(instance.id)
 
-        message = {
-            "name": instance.name,
-            "id": id,
-        }
+        if instance.image:
+            message = {
+                "image": instance.image.name,
+                "id": id,
+                "valid": instance.valid
+            }
 
-        connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host='localhost'))
-        channel = connection.channel()
-        channel.queue_declare(queue='hotdog')
+            connection = pika.BlockingConnection(
+                pika.ConnectionParameters(host='localhost'))
+            channel = connection.channel()
+            channel.queue_declare(queue='hotdog')
 
-        channel.basic_publish(exchange='',
-                              routing_key='hotdog',
-                              body=json.dumps(message))
+            channel.basic_publish(exchange='',
+                                  routing_key='hotdog',
+                                  body=json.dumps(message))
 
     @action(detail=True, methods=['PUT'], serializer_class=ImageDataSerializer,
             parser_classes=[parsers.MultiPartParser],)

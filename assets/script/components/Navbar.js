@@ -20,8 +20,7 @@ const Navbar = () => {
   return (
     <div className="Navbar">
       <div className="logo-container">
-        <img src="/assets/style/logo.svg" />
-        <h1>!hotdog</h1>
+        <img src="/static/images/logo.svg" />
       </div>
 
       <div className="container">
