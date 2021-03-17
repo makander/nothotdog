@@ -13,6 +13,8 @@ from .serializers import ImageSerializer, UserSerializer, ImageDataSerializer
 from rest_framework.decorators import action
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
+import pika
+import json
 
 
 class Index(TemplateView):
@@ -92,11 +94,21 @@ class ImageListView(viewsets.ModelViewSet):
 
     @receiver(post_save, sender=Image)
     def nothotdog(sender, instance, **kwargs):
-        substr = "hotdog"
-        if substr in instance.name:
-            print('valid')
-        else:
-            print('invalid hotdog')
+        id = str(instance.id)
+
+        message = {
+            "name": instance.name,
+            "id": id,
+        }
+
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host='localhost'))
+        channel = connection.channel()
+        channel.queue_declare(queue='hotdog')
+
+        channel.basic_publish(exchange='',
+                              routing_key='hotdog',
+                              body=json.dumps(message))
 
     @action(detail=True, methods=['PUT'], serializer_class=ImageDataSerializer,
             parser_classes=[parsers.MultiPartParser],)
@@ -107,7 +119,7 @@ class ImageListView(viewsets.ModelViewSet):
                                            partial=True)
 
         if serializer.is_valid():
-            serializer.save(self.request.data.get('image'))
+            serializer.save()
             return response.Response(serializer.data)
         return response.Response(serializer.errors,
                                  status.HTTP_400_BAD_REQUEST)

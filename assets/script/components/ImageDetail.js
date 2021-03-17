@@ -23,7 +23,7 @@ const ImageDetail = () => {
             Edit
           </Link>
           <div className={"image image-detail"}>
-            <img height="400" width="600" src={item.image} />
+            <img src={item.image} />
           </div>
         </div>
       </>

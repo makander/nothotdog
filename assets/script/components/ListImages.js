@@ -14,10 +14,10 @@ const ListImages = () => {
       <ul>
         {images.images.map((item) => (
           <li key={item.id}>
-            <p>{item.name}</p>
-            <img height={200} width={300} src={item.image} />
-            <p>{item.description}</p>
-            <Link to={`/images/${item.id}`}>Detail</Link>
+            <Link to={`/images/${item.id}`}>
+              <img height={200} width={300} src={item.image} />
+            </Link>
+            <h3>{item.name}</h3>
           </li>
         ))}
       </ul>
@@ -27,10 +27,12 @@ const ListImages = () => {
   };
 
   return (
-    <div className="list-image-container">
-      <p>List images</p>
-      <Images />
-    </div>
+    <>
+      <h1 class="header">Photos</h1>
+      <div className="list-image-container">
+        <Images />
+      </div>
+    </>
   );
 };
 

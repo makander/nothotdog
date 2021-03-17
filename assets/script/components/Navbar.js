@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <div className="Navbar">
       <div className="logo-container">
-        <img />
+        <img src="/assets/style/logo.svg" />
         <h1>!hotdog</h1>
       </div>
 
@@ -30,7 +30,7 @@ const Navbar = () => {
           <>
             <Link to="/profile">Profile</Link>
             <Link to="/upload">Upload</Link>
-            <Link to="/">logout</Link>
+            <Link to="/">Logout</Link>
           </>
         ) : (
           <Link to="/login">Login</Link>

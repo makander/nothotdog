@@ -1,22 +1,27 @@
-{% load static %}
-{% load compress %}
+{% load static %} {% load compress %}
 
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>{% block title %}{% endblock %}</title>
-        {% compress css %}
-        <link rel="stylesheet" href="{% static 'style/main.scss' %}" type="text/x-scss" media="screen">
-        {% endcompress %}
-    </head>
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+    {% compress css %}
+    <link
+      rel="stylesheet"
+      href="{% static 'style/main.scss' %}"
+      type="text/x-scss"
+      media="screen"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
+    </style>
+    {% endcompress %}
+  </head>
 
-    <body class="{% block bodyclass %}{% endblock %}">
-        {% block content %}{% endblock %}
-
-        {% compress js %}
-        <script type="text/jsx" src="{% static 'script/app.js' %}"></script>
-        {% endcompress %}
-    </body>
+  <body class="{% block bodyclass %}{% endblock %}">
+    {% block content %}{% endblock %} {% compress js %}
+    <script type="text/jsx" src="{% static 'script/app.js' %}"></script>
+    {% endcompress %}
+  </body>
 </html>
