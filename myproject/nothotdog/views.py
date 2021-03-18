@@ -109,7 +109,7 @@ class ImageListView(viewsets.ModelViewSet):
             channel.queue_declare(queue='hotdog')
 
             channel.basic_publish(exchange='',
-                                  routing_key='hotdog',
+                                  routing_key='image-uploaded',
                                   body=json.dumps(message))
 
     @action(detail=True, methods=['PUT'], serializer_class=ImageDataSerializer,
