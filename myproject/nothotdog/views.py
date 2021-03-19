@@ -9,12 +9,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from .models import Image
 from django.views.generic import CreateView, TemplateView, DetailView, ListView, UpdateView
-from .serializers import ImageSerializer, UserSerializer, ImageDataSerializer
+from rest_framework import generics
+from .serializers import ImageSerializer, UserSerializer, ImageDataSerializer, BasicImageSerializer
 from rest_framework.decorators import action
-from django.db.models.signals import pre_save, post_save
-from django.dispatch import receiver
-import pika
-import json
 
 
 class Index(TemplateView):
@@ -88,29 +85,9 @@ class Logout(View):
         return render(request, 'index.html')
 
 
-class ImageListView(viewsets.ModelViewSet):
-    queryset = Image.objects.all()
+class ImageRestView(viewsets.ModelViewSet):
+    queryset = Image.objects.filter(valid=True)
     serializer_class = ImageSerializer
-
-    @receiver(post_save, sender=Image)
-    def nothotdog(sender, instance, **kwargs):
-        id = str(instance.id)
-
-        if instance.image:
-            message = {
-                "image": instance.image.name,
-                "id": id,
-                "valid": instance.valid
-            }
-
-            connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host='localhost'))
-            channel = connection.channel()
-            channel.queue_declare(queue='hotdog')
-
-            channel.basic_publish(exchange='',
-                                  routing_key='image-uploaded',
-                                  body=json.dumps(message))
 
     @action(detail=True, methods=['PUT'], serializer_class=ImageDataSerializer,
             parser_classes=[parsers.MultiPartParser],)
@@ -131,15 +108,15 @@ class ImageListView(viewsets.ModelViewSet):
         serializer.save(created_by=self.request.user,)
         # Perform a custom post-save action.
 
+    @action(detail=True, methods=['PUT'], serializer_class=ImageDataSerializer)
+    def flag(self, request, pk):
+        obj = self.get_object()
 
-class UserImageListView(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+        serializer = self.serializer_class(obj, data=request.data,
+                                           partial=True)
 
-
-class MyImagesListView(viewsets.ModelViewSet):
-    queryset = Image.objects.all()
-    serializer_class = ImageSerializer
-
-    def get_queryset(self):
-        return Image.objects.filter(created_by=self.request.user)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data)
+        return response.Response(serializer.errors,
+                                 status.HTTP_400_BAD_REQUEST)

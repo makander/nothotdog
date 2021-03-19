@@ -6,8 +6,8 @@ from django.contrib.auth import views as auth_views
 
 
 router = routers.DefaultRouter()
-router.register(r'images', views.ImageListView),
-router.register(r'myimages', views.MyImagesListView)
+router.register(r'images', views.ImageRestView)
+#router.register(r'images', views.VisitorListView)
 
 
 urlpatterns = [

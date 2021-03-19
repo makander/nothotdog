@@ -28,7 +28,7 @@ const ListImages = () => {
 
   return (
     <>
-      <h1 class="header">Photos</h1>
+      <h1 className="header">Photos</h1>
       <div className="list-image-container">
         <Images />
       </div>
