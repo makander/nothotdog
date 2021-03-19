@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { createImageRequest } from "../actions/imageActions";
@@ -8,10 +8,13 @@ const Upload = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(null);
+
+  const fileRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(image);
 
     const imageData = {
       name,
@@ -22,7 +25,8 @@ const Upload = () => {
     dispatch(createImageRequest(imageData));
     setName("");
     setDescription("");
-    setImage();
+    setImage(null);
+    fileRef.current.value = "";
   };
   return (
     <div className="form-container upload">
@@ -44,6 +48,7 @@ const Upload = () => {
           <input
             type="file"
             onChange={(e) => setImage(e.target.files[0])}
+            ref={fileRef}
           ></input>
         </div>
 

@@ -25,9 +25,9 @@ export function* fetchImages() {
 export function* createImage(form) {
   console.log("creating images");
   try {
-    yield call(postImageData, form);
+    const image = yield call(postImageData, form);
 
-    yield put({ type: "CREATE_IMAGE_SUCCESS" });
+    yield put({ type: "CREATE_IMAGE_SUCCESS", image });
   } catch (error) {
     //yield put({ type: "CREATE_IMAGE_FAILED", error });
     console.log(error);

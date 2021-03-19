@@ -25,8 +25,8 @@ const imageReducer = (state = INITIAL_STATE, action) => {
       console.log(action);
       console.log(state);
       return {
-        ...state,
-        INITIAL_STATE,
+        ...state.images,
+        images: action.image,
       };
     }
     default:

@@ -61,7 +61,7 @@ export const postImageData = async ({ form: { image, description, name } }) => {
       formData
     );
 
-    console.log(addImageToObject);
+    return addImageToObject.data;
     //return response.data;
   } catch (error) {
     console.log(error);

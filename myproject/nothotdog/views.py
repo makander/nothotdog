@@ -86,7 +86,7 @@ class Logout(View):
 
 
 class ImageRestView(viewsets.ModelViewSet):
-    queryset = Image.objects.filter(valid=True)
+    queryset = Image.objects.filter()
     serializer_class = ImageSerializer
 
     @action(detail=True, methods=['PUT'], serializer_class=ImageDataSerializer,
