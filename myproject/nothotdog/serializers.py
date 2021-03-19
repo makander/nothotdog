@@ -8,8 +8,8 @@ class BasicImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Image
-        fields = ['name', 'description', 'user', 'image']
-        read_only_fields = ['id', 'valid']
+        fields = ['name', 'description', 'user', 'image', 'id']
+        read_only_fields = ['valid']
 
 
 class FullImageSerializer(serializers.ModelSerializer):

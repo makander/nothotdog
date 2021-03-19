@@ -1,7 +1,7 @@
 import "regenerator-runtime/runtime";
 import ReactDOM from "react-dom";
 import React from "react";
-import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
+import { Router, Route, Link, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ListImages from "./components/ListImages";
 import Login from "./components/Login";
@@ -13,6 +13,8 @@ import EditImage from "./components/EditImage";
 import axios from "axios";
 import PrivateRoute from "../script/protectedRouter";
 import Profile from "./components/Profile";
+import history from "./history.js";
+
 axios.interceptors.request.use((request) => {
   console.log("Starting Request", JSON.stringify(request, null, 2));
   return request;
@@ -41,9 +43,9 @@ function App() {
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter basename="/spa">
+    <Router history={history} basename="/spa">
       <App />
-    </BrowserRouter>
+    </Router>
   </Provider>,
   document.getElementById("root")
 );

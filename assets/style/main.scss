@@ -95,7 +95,8 @@ body {
         border-radius: 4px;
       }
 
-      input[type="text" i] {
+      input[type="text" i],
+      [type="password" i] {
         padding: 1px 2px;
         height: 2rem;
       }

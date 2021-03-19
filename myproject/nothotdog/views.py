@@ -7,11 +7,12 @@ from rest_framework import status
 from rest_framework import viewsets
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
-from .models import Image
 from django.views.generic import CreateView, TemplateView, DetailView, ListView, UpdateView
 from rest_framework import generics
-from .serializers import ImageSerializer, UserSerializer, ImageDataSerializer, BasicImageSerializer
 from rest_framework.decorators import action
+
+from .models import Image
+from .serializers import ImageSerializer, UserSerializer, ImageDataSerializer, BasicImageSerializer, FullImageSerializer
 
 
 class Index(TemplateView):
@@ -86,8 +87,14 @@ class Logout(View):
 
 
 class ImageRestView(viewsets.ModelViewSet):
-    queryset = Image.objects.filter()
+    queryset = Image.objects.all()
     serializer_class = ImageSerializer
+
+    def get_serializer_class(self):
+        if self.request.user.is_superuser:
+            return FullImageSerializer
+        else:
+            return BasicImageSerializer
 
     @action(detail=True, methods=['PUT'], serializer_class=ImageDataSerializer,
             parser_classes=[parsers.MultiPartParser],)

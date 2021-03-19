@@ -24,10 +24,7 @@ const imageReducer = (state = INITIAL_STATE, action) => {
     case CREATE_IMAGE_SUCCESS: {
       console.log(action);
       console.log(state);
-      return {
-        ...state.images,
-        images: action.image,
-      };
+      return [...state.images, action.image];
     }
     default:
       return state;

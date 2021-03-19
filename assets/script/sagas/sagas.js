@@ -1,12 +1,12 @@
 import { call, put, takeLatest, all, take } from "redux-saga/effects";
 import { fetchUserData, fetchImageData, postImageData } from "../api";
-
+import history from "../history";
 export function* fetchUser(payload) {
   try {
     const token = yield call(fetchUserData, payload);
     localStorage.setItem("userToken", token);
     yield put({ type: "LOGIN_SUCCESS" });
-    history.p;
+    history.push("/profile");
   } catch (error) {
     yield put({ type: "LOGIN_FAILED", error });
   }
