@@ -5,11 +5,10 @@ from django.contrib.auth.models import User
 
 class BasicImageSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='created_by', read_only=True)
-    created = serializers.DateTimeField(source='created_at')
 
     class Meta:
         model = Image
-        fields = ['name', 'description', 'user', 'image', 'id', 'created']
+        fields = ['name', 'description', 'user', 'image', 'id', 'created_at']
         read_only_fields = ['valid']
 
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { editImage } from "../actions/imageActions";
 
 const EditImage = () => {

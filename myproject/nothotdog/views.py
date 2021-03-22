@@ -8,7 +8,8 @@ from rest_framework import viewsets
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from django.views.generic import CreateView, TemplateView, DetailView, ListView, UpdateView
-from rest_framework import generics
+from rest_framework.generics import get_object_or_404
+
 from rest_framework.decorators import action
 
 from .models import Image
@@ -128,10 +129,12 @@ class ImageRestView(viewsets.ModelViewSet):
         return response.Response(serializer.errors,
                                  status.HTTP_400_BAD_REQUEST)
 
-    def get_next(self, request):
-        image = self.get_object_or_404(Image, id=id)
+    @action(detail=True, methods=['GET'], serializer_class=ImageSerializer)
+    def get_next(self, request, pk):
+        image = get_object_or_404(Image, id=id)
         return image.get_next_by_date_posted()
 
-    def get_prev(self, request):
-        image = self.get_object_or_404(Image, id=id)
+    @action(detail=True, methods=['GET'], serializer_class=ImageSerializer)
+    def get_prev(self, request, pk):
+        image = get_object_or_404(Image, id=id)
         return image.get_prev_by_date_posted()
