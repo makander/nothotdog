@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from rest_framework import parsers
-from rest_framework import response
-from rest_framework import status
-from rest_framework import viewsets
+from rest_framework import response, status, viewsets, parsers, status
+from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from django.views.generic import CreateView, TemplateView, DetailView, ListView, UpdateView
@@ -88,7 +86,7 @@ class Logout(View):
 
 
 class ImageRestView(viewsets.ModelViewSet):
-    queryset = Image.objects.filter()
+    queryset = Image.objects.filter(valid=True)
     serializer_class = ImageSerializer
 
     def get_serializer_class(self):
@@ -96,6 +94,17 @@ class ImageRestView(viewsets.ModelViewSet):
             return FullImageSerializer
         else:
             return BasicImageSerializer
+
+    def update(self, request, pk, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        print(self)
+        instance = get_object_or_404(Image.objects.all(), id=pk)
+        print(instance)
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
     @action(detail=True, methods=['PUT'], serializer_class=ImageDataSerializer,
             parser_classes=[parsers.MultiPartParser],)
@@ -107,9 +116,9 @@ class ImageRestView(viewsets.ModelViewSet):
 
         if serializer.is_valid():
             serializer.save()
-            return response.Response(serializer.data)
-        return response.Response(serializer.errors,
-                                 status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data)
+        return Response(serializer.errors,
+                        status.HTTP_400_BAD_REQUEST)
 
     def perform_create(self, serializer):
         # Include the owner attribute directly, rather than from request data.
@@ -125,16 +134,18 @@ class ImageRestView(viewsets.ModelViewSet):
 
         if serializer.is_valid():
             serializer.save()
-            return response.Response(serializer.data)
-        return response.Response(serializer.errors,
-                                 status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data)
+        return Response(serializer.errors,
+                        status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['GET'], serializer_class=ImageSerializer)
     def get_next(self, request, pk):
-        image = get_object_or_404(Image, id=id)
-        return image.get_next_by_date_posted()
+        image = get_object_or_404(Image.objects.all(), id=pk)
+        next_image = image.get_next_by_created_at()
+        serializer = self.get_serializer_class()
+        return Response(serializer(next_image).data)
 
     @action(detail=True, methods=['GET'], serializer_class=ImageSerializer)
     def get_prev(self, request, pk):
-        image = get_object_or_404(Image, id=id)
+        image = get_object_or_404(Image.objects.all, id=id)
         return image.get_prev_by_date_posted()

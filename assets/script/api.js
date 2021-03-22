@@ -47,6 +47,28 @@ export const fetchOneImageData = async (payload) => {
     console.log(error);
   }
 };
+export const fetchNext = async (payload) => {
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${IMAGE_API}${payload.id}/get_next/`,
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const fetchPrevious = async (payload) => {
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${IMAGE_API}${payload.id}/get_prev/`,
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const updateImage = async ({ form: { description, name, id } }) => {
   if (userToken) {
