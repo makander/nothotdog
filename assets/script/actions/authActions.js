@@ -1,4 +1,4 @@
-import { LOGGED_OUT, LOGIN_REQUEST } from "./actionTypes";
+import { LOGIN_REQUEST, REQUEST_LOGOUT } from "./actionTypes";
 
 export const loginUser = (user) => {
   return {
@@ -6,8 +6,8 @@ export const loginUser = (user) => {
     user,
   };
 };
-const logoutUser = () => {
+export const logoutUser = () => {
   return {
-    type: LOGGED_OUT,
+    type: REQUEST_LOGOUT,
   };
 };

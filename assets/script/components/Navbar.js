@@ -1,19 +1,16 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import { LOGIN_SUCCESS, REQUEST_LOGOUT } from "../actions/actionTypes";
+import { logoutUser } from "../actions/authActions";
 const Navbar = () => {
   const dispatch = useDispatch();
   const counter = useSelector((state) => state.user.authenticated);
   const authed = localStorage.getItem("userToken");
 
-  //axios.defaults.headers.common["Authorization"] = { authed };
-
   useEffect(() => {
-    console.log(authed);
     if (authed && !counter) {
-      dispatch({ type: "LOGIN_SUCCESS" });
-      //axios.defaults.headers.common["Authorization"] = `Token ${authed}}`;
+      dispatch({ type: LOGIN_SUCCESS });
     }
   }, [dispatch]);
 
@@ -29,7 +26,9 @@ const Navbar = () => {
           <>
             <Link to="/profile">Profile</Link>
             <Link to="/upload">Upload</Link>
-            <Link to="/">Logout</Link>
+            <Link onClick={() => dispatch(logoutUser())} to="/">
+              Logout
+            </Link>
           </>
         ) : (
           <Link to="/login">Login</Link>

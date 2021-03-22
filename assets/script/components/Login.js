@@ -9,7 +9,6 @@ const Login = ({ loginUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("click");
     const body = { username, password };
     loginUser(body);
   };

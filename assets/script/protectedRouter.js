@@ -1,17 +1,8 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import React from "react";
 
 function PrivateRoute({ children, ...rest }) {
   const authed = localStorage.getItem("userToken");
-
   return (
     <Route
       {...rest}

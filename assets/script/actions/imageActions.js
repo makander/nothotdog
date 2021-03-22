@@ -1,7 +1,11 @@
-import { REQUEST_ALL_IMAGES, CREATE_IMAGE_REQUEST } from "./actionTypes";
+import {
+  REQUEST_ALL_IMAGES,
+  CREATE_IMAGE_REQUEST,
+  REQUEST_IMAGE,
+  REQUEST_IMAGE_EDIT,
+} from "./actionTypes";
 
 export const requestImages = () => {
-  console.log("IMAGE ACTION");
   return {
     type: REQUEST_ALL_IMAGES,
   };
@@ -14,4 +18,16 @@ export const createImageRequest = (form) => {
   };
 };
 
-const editImage = () => {};
+export const requestImage = (id) => {
+  return {
+    type: REQUEST_IMAGE,
+    id,
+  };
+};
+
+export const editImage = (form) => {
+  return {
+    type: REQUEST_IMAGE_EDIT,
+    form,
+  };
+};

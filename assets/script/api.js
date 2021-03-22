@@ -3,6 +3,8 @@ import axios from "axios";
 const AUTH_URL = "http://localhost:8000/api/auth/";
 const IMAGE_API = "http://localhost:8000/api/images/";
 
+const userToken = localStorage.getItem("userToken");
+
 export const fetchUserData = async (payload) => {
   const username = payload.user.username;
   const password = payload.user.password;
@@ -34,12 +36,40 @@ export const fetchImageData = async () => {
   }
 };
 
-export const postImageData = async ({ form: { image, description, name } }) => {
-  const userToken = localStorage.getItem("userToken");
+export const fetchOneImageData = async (payload) => {
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${IMAGE_API}${payload.id}/`,
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateImage = async ({ form: { description, name, id } }) => {
   if (userToken) {
     axios.defaults.headers.common["Authorization"] = `Token ${userToken}`;
   }
-  console.log(image);
+
+  try {
+    const body = {
+      name,
+      description,
+    };
+
+    const updateImage = await axios.put(`${IMAGE_API}${id}/`, body);
+    return updateImage.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postImageData = async ({ form: { image, description, name } }) => {
+  if (userToken) {
+    axios.defaults.headers.common["Authorization"] = `Token ${userToken}`;
+  }
 
   try {
     const body = {
@@ -50,7 +80,6 @@ export const postImageData = async ({ form: { image, description, name } }) => {
 
     const newObjectId = createImageObject.data.id;
 
-    console.log(createImageObject);
     const formData = new FormData();
 
     formData.append("image", image);

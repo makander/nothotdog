@@ -1,28 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { editImage } from "../actions/imageActions";
 
 const EditImage = () => {
-  const imageId = useLocation();
+  const imageId = useParams();
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(image);
 
     const imageData = {
       name,
       description,
-      image,
+      id: imageId.id,
     };
 
-    dispatch(createImageRequest(imageData));
+    dispatch(editImage(imageData));
     setName("");
     setDescription("");
-    setImage(null);
-    fileRef.current.value = "";
   };
   return (
     <div className="form-container upload">

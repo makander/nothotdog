@@ -35,7 +35,9 @@ function App() {
         <Route path={"/images/:id"} exact component={ImageDetail} />
         <Route path={"/upload"} exact component={Upload} />
         <Route path={"/images/edit/:id"} exact component={EditImage} />
-        <PrivateRoute path="/profile" exact component={Profile} />
+        <PrivateRoute>
+          <Profile path="/profile" />
+        </PrivateRoute>
       </Switch>
     </>
   );
@@ -43,7 +45,7 @@ function App() {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history} basename="/spa">
+    <Router history={history}>
       <App />
     </Router>
   </Provider>,

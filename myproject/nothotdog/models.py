@@ -11,7 +11,7 @@ class Image(models.Model):
     name = models.CharField(max_length=40)
     description = models.TextField(max_length=160, blank=True)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True),
+    created_at = models.DateTimeField(auto_now_add=True, null=False),
     valid = models.BooleanField(null=True)
 
     def __str__(self):

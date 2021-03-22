@@ -14,7 +14,6 @@ const Upload = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(image);
 
     const imageData = {
       name,

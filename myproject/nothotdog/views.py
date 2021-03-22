@@ -87,7 +87,7 @@ class Logout(View):
 
 
 class ImageRestView(viewsets.ModelViewSet):
-    queryset = Image.objects.all()
+    queryset = Image.objects.filter()
     serializer_class = ImageSerializer
 
     def get_serializer_class(self):
@@ -127,3 +127,11 @@ class ImageRestView(viewsets.ModelViewSet):
             return response.Response(serializer.data)
         return response.Response(serializer.errors,
                                  status.HTTP_400_BAD_REQUEST)
+
+    def get_next(self, request):
+        image = self.get_object_or_404(Image, id=id)
+        return image.get_next_by_date_posted()
+
+    def get_prev(self, request):
+        image = self.get_object_or_404(Image, id=id)
+        return image.get_prev_by_date_posted()

@@ -5,10 +5,11 @@ from django.contrib.auth.models import User
 
 class BasicImageSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='created_by', read_only=True)
+    created = serializers.DateTimeField(source='created_at')
 
     class Meta:
         model = Image
-        fields = ['name', 'description', 'user', 'image', 'id']
+        fields = ['name', 'description', 'user', 'image', 'id', 'created']
         read_only_fields = ['valid']
 
 
@@ -18,6 +19,7 @@ class FullImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = ['name', 'description', 'user', 'id', 'image', 'valid']
+        read_only_fields = ['created_at']
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -25,7 +27,8 @@ class ImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Image
-        fields = ['name', 'description', 'user', 'id', 'image', 'valid']
+        fields = ['name', 'description', 'user',
+                  'id', 'image', 'valid']
 
         def update(self, instance, validated_data):
             instance.name = validated_data.pop('name')

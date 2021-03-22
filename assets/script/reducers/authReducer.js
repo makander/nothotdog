@@ -15,7 +15,6 @@ const authReducer = (state = INITIAL_STATE, action) => {
       };
     }
     case LOGIN_FAILED: {
-      console.log(action);
       return {
         ...state,
         token: action.payload,
@@ -23,8 +22,8 @@ const authReducer = (state = INITIAL_STATE, action) => {
     }
     case LOGOUT_SUCCESS: {
       return {
-        ...state,
-        INITIAL_STATE,
+        ...state.authenticated,
+        authenticated: false,
       };
     }
     default:
