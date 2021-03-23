@@ -18,35 +18,46 @@ import {
 
 const INITIAL_STATE = {
   loading: true,
+  images: null,
+  currentImage: null,
+  nextImage: null,
+  previousImage: null,
+  error: null,
 };
 
 const imageReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case IMAGES_RECEIVED: {
+      console.log(action.images);
       return {
         ...state,
-        images: action.images,
-        ...state,
+        images: [...action.images],
         loading: false,
       };
     }
     case IMAGES_RECIVED_FAILURE: {
       return {
         ...state,
-        token: action.payload,
+        loading: false,
+        error: { message: "failed to fetch image" },
       };
     }
     case CREATE_IMAGE_SUCCESS: {
-      return [...state.images, action.image];
+      return {
+        ...state,
+        images: [...state.images, action.image],
+      };
     }
     case EDIT_IMAGE_SUCCESS: {
       //return [...state.images, action.image];
     }
     case REQUEST_IMAGE_SUCCESS: {
+      console.log(action);
       return {
         ...state,
-        currentImage: action.image,
-        ...state,
+        currentImage: action.current,
+        nextImage: action.next,
+        previousImage: action.prev,
         loading: false,
       };
     }
@@ -57,6 +68,14 @@ const imageReducer = (state = INITIAL_STATE, action) => {
 
     case DISPLAY_PREVIOUS_IMAGE: {
       return { ...state, currentImage: state.previousImage };
+    }
+    case RESET_CURRENT_IMAGE: {
+      return {
+        ...state,
+        currentImage: undefined,
+        nextImage: undefined,
+        previousImage: undefined,
+      };
     }
 
     case REQUEST_NEXT_IMAGE_SUCCESS: {

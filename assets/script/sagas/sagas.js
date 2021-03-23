@@ -52,8 +52,18 @@ export function* fetchImages() {
 }
 export function* fetchImage(payload) {
   try {
-    const image = yield call(fetchOneImageData, payload);
-    yield put({ type: REQUEST_IMAGE_SUCCESS, image });
+    const [current, next, prev] = yield all([
+      call(fetchOneImageData, payload),
+      call(fetchNextImage, payload),
+      call(fetchPrevious, payload),
+    ]);
+
+    console.log(current);
+    console.log(next);
+    console.log(prev);
+    yield put({ type: REQUEST_IMAGE_SUCCESS, current });
+    yield put({ type: REQUEST_NEXT_IMAGE_SUCCESS, next });
+    yield put({ type: REQUEST_PREVIOUS_IMAGE_SUCCESS, prev });
   } catch (error) {
     console.log(error);
   }
@@ -61,6 +71,7 @@ export function* fetchImage(payload) {
 export function* fetchNextImage(payload) {
   try {
     const image = yield call(fetchNext, payload);
+
     yield put({ type: REQUEST_NEXT_IMAGE_SUCCESS, image });
   } catch (error) {
     console.log(error);
@@ -110,8 +121,8 @@ export default function* rootSaga() {
   yield takeLatest(REQUEST_ALL_IMAGES, fetchImages);
   yield takeLatest(CREATE_IMAGE_REQUEST, createImage);
   yield takeLatest(REQUEST_IMAGE, fetchImage);
-  yield takeLatest(REQUEST_NEXT_IMAGE, fetchNextImage);
-  yield takeLatest(REQUEST_PREVIOUS_IMAGE, fetchPreviousImage);
+  /*   yield takeLatest(REQUEST_IMAGE, fetchNextImage);
+  yield takeLatest(REQUEST_IMAGE, fetchPreviousImage); */
   yield takeLatest(REQUEST_LOGOUT, removeToken);
   yield takeLatest(REQUEST_IMAGE_EDIT, editImage);
 }

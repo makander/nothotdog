@@ -10,7 +10,6 @@ const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS: {
       return {
-        ...state.authenticated,
         authenticated: true,
       };
     }
@@ -22,7 +21,6 @@ const authReducer = (state = INITIAL_STATE, action) => {
     }
     case LOGOUT_SUCCESS: {
       return {
-        ...state.authenticated,
         authenticated: false,
       };
     }

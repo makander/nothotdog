@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
-import { useParams, Link, useHistory, useLocation } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import {
   requestImage,
   requestNextImage,
   requestPreviousImage,
 } from "../actions/imageActions";
 import { useDispatch, useSelector } from "react-redux";
-import { DISPLAY_NEXT_IMAGE } from "../actions/actionTypes";
+import {
+  DISPLAY_NEXT_IMAGE,
+  DISPLAY_PREVIOUS_IMAGE,
+} from "../actions/actionTypes";
 
 const ImageDetail = () => {
   const imageId = useParams();
@@ -16,20 +19,21 @@ const ImageDetail = () => {
   const images = useSelector((state) => state.images);
   let imageFromRequest = useSelector((state) => state.images.currentImage);
   const nextImage = useSelector((state) => state.images.nextImage);
-  const prevImage = useSelector((state) => state.images.requestPreviousImage);
+  const prevImage = useSelector((state) => state.images.previousImage);
   const loading = useSelector((state) => state.images.loading);
 
   useEffect(() => {
     dispatch(requestImage(imageId.id));
-
-    dispatch(requestNextImage(imageId.id));
+    console.log("running effect in list");
   }, []);
 
   const handleNext = (e) => {
-    /*  dispatch(requestImage(imageId.id));
-    dispatch(requestNextImage(imageId.id)); */
-    dispatch({ type: DISPLAY_NEXT_IMAGE });
     dispatch(requestNextImage(imageId.id));
+    history.push(`/images/${nextImage.id}`);
+  };
+  const handlePrev = (e) => {
+    dispatch(requestPreviousImage(imageId.id));
+    history.push(`/images/${prevImage.id}`);
   };
 
   const Detail = () => {
@@ -54,13 +58,18 @@ const ImageDetail = () => {
           <div className={"image image-detail"}>
             <img src={imageFromRequest.image} />
           </div>
-          {images.images && nextImage ? (
-            <Link onClick={() => handleNext()} to={`/images/${nextImage.id}`}>
-              next
-            </Link>
-          ) : (
-            ""
-          )}
+          <div className="button-container">
+            {/*        <>
+              {images.images.length > 0 ? (
+                <>
+                  <button onClick={() => handleNext()}>Next</button>
+                  <button onClick={() => handlePrev()}>Previous</button>
+                </>
+              ) : (
+                ""
+              )}
+            </> */}
+          </div>
         </div>
       </div>
     ) : (
