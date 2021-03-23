@@ -1,55 +1,39 @@
 import React, { useEffect } from "react";
-import { useParams, Link, useHistory } from "react-router-dom";
-import { requestImage, requestNextImage } from "../actions/imageActions";
+import { useParams, Link, useHistory, useLocation } from "react-router-dom";
+import {
+  requestImage,
+  requestNextImage,
+  requestPreviousImage,
+} from "../actions/imageActions";
 import { useDispatch, useSelector } from "react-redux";
+import { DISPLAY_NEXT_IMAGE } from "../actions/actionTypes";
 
 const ImageDetail = () => {
   const imageId = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const images = useSelector((state) => state.images);
   let imageFromRequest = useSelector((state) => state.images.currentImage);
-
-  /*   if (!images?.images) {
-    const imgFromState = images.images.filter((item) => item.id === imageId.id);
-  } */
+  const nextImage = useSelector((state) => state.images.nextImage);
+  const prevImage = useSelector((state) => state.images.requestPreviousImage);
+  const loading = useSelector((state) => state.images.loading);
 
   useEffect(() => {
-    if (!images?.images) {
-      dispatch(requestImage(imageId.id));
-      console.log("dispatching");
-    }
+    dispatch(requestImage(imageId.id));
+
+    dispatch(requestNextImage(imageId.id));
   }, []);
 
+  const handleNext = (e) => {
+    /*  dispatch(requestImage(imageId.id));
+    dispatch(requestNextImage(imageId.id)); */
+    dispatch({ type: DISPLAY_NEXT_IMAGE });
+    dispatch(requestNextImage(imageId.id));
+  };
+
   const Detail = () => {
-    return images.image ? (
-      images.image.map((item) => (
-        <div className="image-detail-container">
-          <div className={"header image-detail"}>
-            <h1 className={"header image-detail highlight"}>{item.name}</h1>
-            <h1 className={"header image-detail"}>{item.description}</h1>
-            <Link
-              to={{
-                pathname: `/images/edit/${item.id}`,
-              }}
-              className={"button bg-lightBlue"}
-            >
-              Edit
-            </Link>
-            awdawdwaad
-            <div className={"image image-detail"}>
-              <img src={item.image} />
-            </div>
-            <Link onClick={() => dispatch(requestNextImage(imageId.id))}>
-              Next
-            </Link>
-            <Link onClick={() => dispatch(requestNextImage(imageId.id))}>
-              Previous
-            </Link>
-          </div>
-        </div>
-      ))
-    ) : imageFromRequest?.name ? (
+    return !loading && imageFromRequest?.name ? (
       <div className="image-detail-container">
         <div className={"header image-detail"}>
           <h1 className={"header image-detail highlight"}>
@@ -70,13 +54,17 @@ const ImageDetail = () => {
           <div className={"image image-detail"}>
             <img src={imageFromRequest.image} />
           </div>
-          <button
-            onClick={() => dispatch(requestNextImage(imageId.id))}
-          ></button>
+          {images.images && nextImage ? (
+            <Link onClick={() => handleNext()} to={`/images/${nextImage.id}`}>
+              next
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     ) : (
-      "NOTHING"
+      "LOADING"
     );
   };
 

@@ -26,6 +26,9 @@ import {
   REQUEST_IMAGE_EDIT,
   REQUEST_NEXT_IMAGE,
   REQUEST_PREVIOUS_IMAGE,
+  REQUEST_PREVIOUS_IMAGE_SUCCESS,
+  REQUEST_NEXT_IMAGE_SUCCESS,
+  RESET_CURRENT_IMAGE,
 } from "../actions/actionTypes";
 
 export function* fetchUser(payload) {
@@ -58,7 +61,7 @@ export function* fetchImage(payload) {
 export function* fetchNextImage(payload) {
   try {
     const image = yield call(fetchNext, payload);
-    yield put({ type: REQUEST_IMAGE_SUCCESS, image });
+    yield put({ type: REQUEST_NEXT_IMAGE_SUCCESS, image });
   } catch (error) {
     console.log(error);
   }
@@ -66,7 +69,7 @@ export function* fetchNextImage(payload) {
 export function* fetchPreviousImage(payload) {
   try {
     const image = yield call(fetchPrevious, payload);
-    yield put({ type: REQUEST_IMAGE_SUCCESS, image });
+    yield put({ type: REQUEST_PREVIOUS_IMAGE_SUCCESS, image });
   } catch (error) {
     console.log(error);
   }

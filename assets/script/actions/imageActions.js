@@ -4,6 +4,7 @@ import {
   REQUEST_IMAGE,
   REQUEST_IMAGE_EDIT,
   REQUEST_NEXT_IMAGE,
+  REQUEST_PREVIOUS_IMAGE,
 } from "./actionTypes";
 
 export const requestImages = () => {
