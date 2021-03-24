@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editImage } from "../actions/imageActions";
 
 const EditImage = () => {
@@ -8,6 +8,7 @@ const EditImage = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const currentImage = useSelector((state) => state.images.currentImage);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,6 +18,14 @@ const EditImage = () => {
       description,
       id: imageId.id,
     };
+
+    if (!name) {
+      imageData.name = currentImage.name;
+    }
+
+    if (!description) {
+      imageData.description = currentImage.description;
+    }
 
     dispatch(editImage(imageData));
     setName("");

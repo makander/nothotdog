@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { LOGIN_SUCCESS, REQUEST_LOGOUT } from "../actions/actionTypes";
+import { LOGIN_SUCCESS } from "../actions/actionTypes";
 import { logoutUser } from "../actions/authActions";
 const Navbar = () => {
   const dispatch = useDispatch();

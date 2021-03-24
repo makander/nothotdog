@@ -1,15 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams, Link, useHistory, NavLink } from "react-router-dom";
-import {
-  requestImage,
-  requestNextImage,
-  requestPreviousImage,
-} from "../actions/imageActions";
+import { requestImage } from "../actions/imageActions";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  DISPLAY_NEXT_IMAGE,
-  DISPLAY_PREVIOUS_IMAGE,
-} from "../actions/actionTypes";
 
 const ImageDetail = () => {
   const imageId = useParams();
@@ -24,7 +16,6 @@ const ImageDetail = () => {
 
   useEffect(() => {
     dispatch(requestImage(imageId.id));
-    console.log("running effect in list");
   }, []);
 
   const handleNext = (e) => {
@@ -70,7 +61,7 @@ const ImageDetail = () => {
               {images?.images && prevImage ? (
                 <>
                   <button onClick={() => handlePrev()}>
-                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                    <i className="fa fa-arrow-left" aria-hidden="true"></i>
                   </button>
                 </>
               ) : (
@@ -78,8 +69,8 @@ const ImageDetail = () => {
               )}
               {images?.images && nextImage ? (
                 <>
-                  <button class="Ne" onClick={() => handleNext()}>
-                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  <button onClick={() => handleNext()}>
+                    <i className="fa fa-arrow-right" aria-hidden="true"></i>
                   </button>
                 </>
               ) : (

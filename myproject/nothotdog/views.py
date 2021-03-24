@@ -97,8 +97,9 @@ class ImageRestView(viewsets.ModelViewSet):
 
     def update(self, request, pk, *args, **kwargs):
         partial = kwargs.pop('partial', False)
-        print(self)
-        instance = get_object_or_404(self.get_queryset(), id=pk)
+        print(request)
+
+        instance = get_object_or_404(Image, id=pk)
         print(instance)
         serializer = self.get_serializer(
             instance, data=request.data, partial=partial)
@@ -141,13 +142,13 @@ class ImageRestView(viewsets.ModelViewSet):
     @action(detail=True, methods=['GET'], serializer_class=ImageSerializer)
     def get_next(self, request, pk):
         image = get_object_or_404(self.get_queryset(), id=pk)
-        next_image = image.get_next_by_created_at()
+        next_image = image.get_next_by_created_at(valid=True)
         serializer = self.get_serializer_class()
         return Response(serializer(next_image).data)
 
-    @action(detail=True, methods=['GET'], serializer_class=ImageSerializer)
+    @ action(detail=True, methods=['GET'], serializer_class=ImageSerializer)
     def get_prev(self, request, pk):
         image = get_object_or_404(self.get_queryset(), id=pk)
-        prev_image = image.get_previous_by_created_at()
+        prev_image = image.get_previous_by_created_at(valid=True)
         serializer = self.get_serializer_class()
         return Response(serializer(prev_image).data)
