@@ -56,8 +56,6 @@ const imageReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentImage: action.current,
-        nextImage: action.next,
-        previousImage: action.prev,
         loading: false,
       };
     }
