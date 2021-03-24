@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams, Link, useHistory } from "react-router-dom";
+import { useParams, Link, useHistory, NavLink } from "react-router-dom";
 import {
   requestImage,
   requestNextImage,
@@ -28,25 +28,30 @@ const ImageDetail = () => {
   }, []);
 
   const handleNext = (e) => {
-    dispatch(requestNextImage(imageId.id));
+    //dispatch({ type: DISPLAY_NEXT_IMAGE });
     history.push(`/images/${nextImage.id}`);
+    dispatch(requestImage(nextImage.id));
   };
   const handlePrev = (e) => {
-    dispatch(requestPreviousImage(imageId.id));
     history.push(`/images/${prevImage.id}`);
+    dispatch(requestImage(prevImage.id));
   };
 
   const Detail = () => {
     return !loading && imageFromRequest?.name ? (
       <div className="image-detail-container">
-        <div className={"header image-detail"}>
-          <h1 className={"header image-detail highlight"}>
-            {imageFromRequest.name}
-          </h1>
-          <h1 className={"header image-detail"}>
-            {imageFromRequest.description}
-          </h1>
-          <Link
+        <div className={"header image-detail container"}>
+          <div>
+            <h2 className={"header image-detail highlight"}>
+              {imageFromRequest.name}
+            </h2>
+            <h2 className={"header image-detail"}>/</h2>
+            <h2 className={"header image-detail"}>
+              {imageFromRequest.description}
+            </h2>
+          </div>
+
+          <NavLink
             to={{
               pathname: `/images/edit/${imageFromRequest.id}`,
               state: imageId.id,
@@ -54,22 +59,34 @@ const ImageDetail = () => {
             className={"button bg-lightBlue"}
           >
             Edit
-          </Link>
-          <div className={"image image-detail"}>
-            <img src={imageFromRequest.image} />
-          </div>
-          <div className="button-container">
-            {/*        <>
-              {images.images.length > 0 ? (
+          </NavLink>
+        </div>
+        <div className={"image image-detail"}>
+          <img src={imageFromRequest.image} />
+        </div>
+        <div className="button-container">
+          {
+            <>
+              {images?.images && prevImage ? (
                 <>
-                  <button onClick={() => handleNext()}>Next</button>
-                  <button onClick={() => handlePrev()}>Previous</button>
+                  <button onClick={() => handlePrev()}>
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                  </button>
                 </>
               ) : (
                 ""
               )}
-            </> */}
-          </div>
+              {images?.images && nextImage ? (
+                <>
+                  <button class="Ne" onClick={() => handleNext()}>
+                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  </button>
+                </>
+              ) : (
+                ""
+              )}
+            </>
+          }
         </div>
       </div>
     ) : (

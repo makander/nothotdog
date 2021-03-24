@@ -68,9 +68,35 @@ body {
   }
 }
 
+.image-detail {
+  &.header {
+    &.container {
+      width: 60vw;
+      justify-content: space-between;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
 .header {
   margin-left: 6.5rem;
   margin-bottom: -1rem;
+
+  &.image-detail,
+  &.highlight {
+    display: inline-block;
+    margin-left: unset;
+    margin-bottom: unset;
+  }
+  &.highlight {
+    color: #0ccfff;
+    //margin-right: 0.5rem;
+  }
+
+  &.image-detail {
+    margin-left: 0.5rem;
+  }
 }
 
 .form-container {
@@ -105,7 +131,8 @@ body {
         border: none;
       }
 
-      button {
+      button,
+      a {
         width: 5rem;
         height: 2rem;
         border: none;
@@ -129,10 +156,30 @@ body {
 
 .image-detail-container {
   display: flex;
+  align-items: center;
+  flex-direction: column;
   img {
     width: 60vw;
     height: auto;
   }
 }
-.image .image-detail {
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    background-color: #0b193c;
+    padding: 1rem;
+    border-radius: 3;
+    border: 0;
+    border-radius: 5px;
+    margin: 1rem;
+  }
+
+  i {
+    color: #0ccfff;
+    font-size: 1rem;
+  }
 }

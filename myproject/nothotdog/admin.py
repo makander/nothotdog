@@ -14,12 +14,10 @@ class ImageForm(forms.ModelForm):
 
 def make_valid(modeladmin, request, queryset):
     queryset.update(valid=True)
-    make_valid.short_description = "Mark selected images as hotdogs"
 
 
 def make_invalid(modeladmin, request, queryset):
     queryset.update(valid=False)
-    make_invalid.short_description = "Mark selected images as not being hotdogs"
 
 
 class ImageAdmin(admin.ModelAdmin):

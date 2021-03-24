@@ -61,17 +61,17 @@ export function* fetchImage(payload) {
     const { current, next, prev } = yield all({
       current: call(fetchOneImageData, payload),
       next: call(fetchNext, payload),
-      //prev: call(fetchPrevious, payload),
+      prev: call(fetchPrevious, payload),
     });
     console.log(current);
     console.log(next);
     console.log(prev);
 
-    yield all(
+    yield all([
       put({ type: REQUEST_IMAGE_SUCCESS, current }),
-      put({ type: REQUEST_NEXT_IMAGE_SUCCESS, next })
-      //put({ type: REQUEST_PREVIOUS_IMAGE_SUCCESS, prev })
-    );
+      put({ type: REQUEST_NEXT_IMAGE_SUCCESS, next }),
+      put({ type: REQUEST_PREVIOUS_IMAGE_SUCCESS, prev }),
+    ]);
   } catch (error) {
     console.log(error);
   }

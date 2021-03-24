@@ -52,7 +52,7 @@ const imageReducer = (state = INITIAL_STATE, action) => {
       //return [...state.images, action.image];
     }
     case REQUEST_IMAGE_SUCCESS: {
-      console.log(action);
+      console.log("this is in image success");
       return {
         ...state,
         currentImage: action.current,
@@ -77,10 +77,10 @@ const imageReducer = (state = INITIAL_STATE, action) => {
     }
 
     case REQUEST_NEXT_IMAGE_SUCCESS: {
-      return { ...state, nextImage: action.image };
+      return { ...state, nextImage: action.next };
     }
     case REQUEST_PREVIOUS_IMAGE_SUCCESS: {
-      return { ...state, previousImage: action.image };
+      return { ...state, previousImage: action.prev };
     }
     default:
       return state;
