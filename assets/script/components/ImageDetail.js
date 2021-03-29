@@ -19,7 +19,6 @@ const ImageDetail = () => {
   }, []);
 
   const handleNext = (e) => {
-    //dispatch({ type: DISPLAY_NEXT_IMAGE });
     history.push(`/images/${nextImage.id}`);
     dispatch(requestImage(nextImage.id));
   };

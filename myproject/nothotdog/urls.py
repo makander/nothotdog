@@ -3,11 +3,13 @@ from . import views
 from django.contrib.auth.decorators import login_required
 from rest_framework import routers, serializers, viewsets
 from django.contrib.auth import views as auth_views
+from rest_framework.authtoken import views as token_view
 
 
 router = routers.DefaultRouter()
 router.register(r'images', views.ImageRestView)
-#router.register(r'images', views.VisitorListView)
+router.register(r'signup', views.CreateUserView)
+# router.register(r'images', views.VisitorListView)
 
 
 urlpatterns = [
@@ -24,5 +26,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/auth/', include('dj_rest_auth.urls')),
     path('spa/', views.SPAIndex.as_view(), name="spa_index"),
-    re_path(r'^spa/', views.SPAIndex.as_view())
+    re_path(r'^spa/', views.SPAIndex.as_view()),
+    path('api-token-auth/', token_view.obtain_auth_token)
 ]

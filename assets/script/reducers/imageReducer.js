@@ -9,6 +9,8 @@ import {
   RESET_CURRENT_IMAGE,
   DISPLAY_NEXT_IMAGE,
   DISPLAY_PREVIOUS_IMAGE,
+  REQUEST_IMAGE,
+  REQUEST_ALL_IMAGES,
 } from "../actions/actionTypes";
 
 const INITIAL_STATE = {
@@ -27,6 +29,18 @@ const imageReducer = (state = INITIAL_STATE, action) => {
         ...state,
         images: [...action.images],
         loading: false,
+      };
+    }
+    case REQUEST_IMAGE: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case REQUEST_ALL_IMAGES: {
+      return {
+        ...state,
+        loading: true,
       };
     }
     case IMAGES_RECIVED_FAILURE: {

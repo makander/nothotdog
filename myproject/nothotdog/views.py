@@ -1,17 +1,18 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from rest_framework import response, status, viewsets, parsers, status
+from rest_framework import response, status, viewsets, parsers, status, mixins
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from django.views.generic import CreateView, TemplateView, DetailView, ListView, UpdateView
 from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import AllowAny
 
 from rest_framework.decorators import action
 
 from .models import Image
-from .serializers import ImageSerializer, UserSerializer, ImageDataSerializer, BasicImageSerializer, FullImageSerializer
+from .serializers import ImageSerializer, ImageDataSerializer, BasicImageSerializer, FullImageSerializer, UserSerializer
 
 
 class Index(TemplateView):
@@ -97,10 +98,8 @@ class ImageRestView(viewsets.ModelViewSet):
 
     def update(self, request, pk, *args, **kwargs):
         partial = kwargs.pop('partial', False)
-        print(request)
 
         instance = get_object_or_404(Image, id=pk)
-        print(instance)
         serializer = self.get_serializer(
             instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
@@ -152,3 +151,9 @@ class ImageRestView(viewsets.ModelViewSet):
         prev_image = image.get_previous_by_created_at(valid=True)
         serializer = self.get_serializer_class()
         return Response(serializer(prev_image).data)
+
+
+class CreateUserView(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    permission_classes = [AllowAny]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

@@ -3,13 +3,30 @@ from .models import Image
 from django.contrib.auth.models import User
 
 
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            password=validated_data['password'],
+
+        )
+        return user
+
+    class Meta:
+        model = User
+        fields = ('password', 'username',)
+
+
 class BasicImageSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='created_by', read_only=True)
 
     class Meta:
         model = Image
-        fields = ['name', 'description', 'user', 'image', 'id', 'created_at']
-        read_only_fields = ['valid']
+        fields = ['name', 'description', 'user',
+                  'image', 'id', 'created_at', 'valid']
+        read_only_fields = ['valid', 'created_at']
 
 
 class FullImageSerializer(serializers.ModelSerializer):
@@ -39,12 +56,3 @@ class ImageDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = ['image']
-
-
-class UserSerializer(serializers.ModelSerializer):
-
-    image_set = ImageSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = User
-        fields = ('username', 'image_set')
